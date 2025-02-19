@@ -123,7 +123,7 @@ public class Constants {
     public static final int kRightMotorId = 5; //uodated to match our architecture
 
     public static final int kLaserId = 33;  //updated to match our architecture
-    public static final int kColorId = 32;  //updated to match our architecture
+    public static final int kColorId = 32;  //updated to match our architecture but this isn't used
 
     public static final double kMaxCurrent = 30;
 
@@ -145,8 +145,7 @@ public class Constants {
     public static final int kWristMotorId = 7;       //updated to match our architecture
     public static final int kIntakeMotorId = 6;     //updated to match our architecture
 
-    public static final int kWristEncoderId = 9;     //updated to match our architecture
-
+    public static final int kWristEncoderId = 9;     //this is a DIO input for the through bore Encoder
     public static final int kMaxWristCurrent = 10;  
 
     public static final double kWristP = 0.01;
@@ -175,48 +174,8 @@ public class Constants {
     public static final double kGroundIntakeSpeed = -0.5;
   }
 
-  /*public static class Intake {
-    // Motors
-    public static final int kIntakeMotorId = 9;
-    public static final int kPivotMotorId = 10;
-
-    // DIO
-    public static final int k_pivotEncoderId = 0;
-    public static final int k_intakeLimitSwitchId = 2;
-
-    // Absolute encoder offset
-    public static final double k_pivotEncoderOffset = 0.166842; // Straight up, sketchy to reset to "up"
-
-    // Pivot set point angles
-    public static final double k_pivotAngleGround = 60;
-    public static final double k_pivotAngleSource = 190;
-    public static final double k_pivotAngleAmp = k_pivotAngleSource;
-    public static final double k_pivotAngleStow = 275;
-
-    // Intake speeds
-    public static final double k_intakeSpeed = 0.7;
-    public static final double k_ejectSpeed = -0.45;
-    public static final double k_feedShooterSpeed = -0.5;
-  }*/
-
-  // DIO
-
-  /*  Drivetrain
-  public static class Drive {
-    public static final double kP = 0.0; // 0.00085;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
-
-    public static final double kS = 0.1695;// 0.01;
-    public static final double kV = 2.8559;// 2.6;
-    public static final double kA = 0.4864;
-
-    public static final int kFLMotorId = 8;
-    public static final int kBLMotorId = 7;
-    public static final int kFRMotorId = 6;
-    public static final int kBRMotorId = 5;
-}
-  */
+  
+  
 // test this
   public static class Field {
     public static final double k_width = Units.feetToMeters(54.0);
