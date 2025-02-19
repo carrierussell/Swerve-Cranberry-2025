@@ -218,5 +218,23 @@ public class Elevator extends Subsystem {
     mPeriodicIO.state = ElevatorState.A2;
   }
 
+  // Returns if elevator's current actual position is close enough to the setpoint.
+  public boolean hasReached() {
+    if (!mPeriodicIO.is_elevator_pos_control) {
+      // We are not using position control, so return false.
+      return false;
+    }
+
+    // Govind: This math gets the absolute difference between the actual encoder position and the set target.
+    // We can compare the difference between some threshold, which I have arbitrarily set. 
+    // If you want to use this function, make sure to set the threshold (kSetpointThreshold in Constants.java) to a value that makes sense.
+    if ((Math.abs(mLeftEncoder.getPosition() - mPeriodicIO.elevator_target)) < Constants.Elevator.kSetpointThreshold) {
+      // Elevator's current position is within the threshold of the set elevator target, so we can return true.
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   /*---------------------------------- Custom Private Functions ---------------------------------*/
 }

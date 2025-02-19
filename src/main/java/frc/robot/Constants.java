@@ -116,6 +116,11 @@ public class Constants {
     public static final double kScoreAlgaeHeight = 0.0;
     public static final double kLowAlgaeHeight = 24.8;
     public static final double kHighAlgaeHeight = 42.5;
+
+    public static final double kSetpointThreshold = 2.0; // Acceptable distance in encoder units between the elevator's actual position and its current target height.
+
+    // Auto constants for Elevator
+    public static final double kElevatorMaxMoveTime = 2.0; // Time it takes for the elevator to move from StowHeight to MaxHeight
   }
 
   public static class Coral {
@@ -138,6 +143,9 @@ public class Constants {
     public static final double kL24Speed = 0.5;
     public static final double kIndexSpeed = 0.1;
     public static final double kSpeedDifference = kL1Speed * 0.5;
+
+    // Auto constants for Coral
+    public static final double kCoralScoreTime = 2.0; // Time it takes for the coral to be scored.
   }
 
   public static class Algae {
