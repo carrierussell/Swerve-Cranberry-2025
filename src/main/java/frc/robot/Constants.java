@@ -93,8 +93,8 @@ public class Constants {
   }
 
   public static class Elevator {
-    public static final int kElevatorLeftMotorId = 9;
-    public static final int kElevatorRightMotorId = 10;
+    public static final int kElevatorLeftMotorId = 8;
+    public static final int kElevatorRightMotorId = 9;
 
     public static final double kP = 0.15;
     public static final double kI = 0;
@@ -122,20 +122,20 @@ public class Constants {
     public static final int kLeftMotorId = 4;  //updated to match our architecture
     public static final int kRightMotorId = 5; //uodated to match our architecture
 
-    public static final int kLaserId = 3;  //updated to match our architecture
-    public static final int kColorId = 2;  //updated to match our architecture
+    public static final int kLaserId = 33;  //updated to match our architecture
+    public static final int kColorId = 32;  //updated to match our architecture
 
-    public static final double kMaxCurrent = 20;
+    public static final double kMaxCurrent = 30;
 
     public static final double kP = 0.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
     public static final double kIZone = 0;
 
-    public static final double kIntakeSpeed = 0.3;
-    public static final double kReverseSpeed = -0.3;
-    public static final double kL1Speed = 0.4;
-    public static final double kL24Speed = 0.4;
+    public static final double kIntakeSpeed = 0.4;
+    public static final double kReverseSpeed = -0.4;
+    public static final double kL1Speed = 0.5;
+    public static final double kL24Speed = 0.5;
     public static final double kIndexSpeed = 0.1;
     public static final double kSpeedDifference = kL1Speed * 0.5;
   }
@@ -145,7 +145,7 @@ public class Constants {
     public static final int kWristMotorId = 7;       //updated to match our architecture
     public static final int kIntakeMotorId = 6;     //updated to match our architecture
 
-    public static final int kWristEncoderId = 5;     //updated to match our architecture
+    public static final int kWristEncoderId = 9;     //updated to match our architecture
 
     public static final int kMaxWristCurrent = 10;  
 
@@ -164,15 +164,15 @@ public class Constants {
     public static final double kWristMaxAcceleration = 1380.0;
 
     public static final double kStowAngle = 233.0;
-    public static final double kDeAlgaeAngle = 215.0;
-    public static final double kGroundIntakeAngle = 162.0;
+    public static final double kDeAlgaeAngle = 250.0;
+    public static final double kGroundIntakeAngle = 330.0;
 
     // INTAKE
     public static final int kMaxIntakeCurrent = 20;
 
-    public static final double kIntakeSpeed = 0.6;
-    public static final double kEjectSpeed = -0.3;
-    public static final double kGroundIntakeSpeed = -0.3;
+    public static final double kIntakeSpeed = 0.8;
+    public static final double kEjectSpeed = -0.5;
+    public static final double kGroundIntakeSpeed = -0.5;
   }
 
   /*public static class Intake {

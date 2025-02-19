@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.simulation.SimulatableCANSparkMax;
 import frc.robot.subsystems.leds.LEDs;
+import au.grapplerobotics.CanBridge;
 
 public class Coral extends Subsystem {
 

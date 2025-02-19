@@ -15,29 +15,33 @@ public class OperatorController extends FilteredController {
 
   // CORAL
   public boolean getWantsCoralIntake() {
-    return this.getRawButton(6);
+    return this.getRawButton(5);  //Left Bumper
   }
 
   // ELEVATOR
   public boolean getWantsElevatorReset() {
-    return this.getRawButton(7);
+    return this.getRawButton(7);  // Start button
   }
 
   public boolean getWantsElevatorStow() {
-    return this.getRawButton(1);
+    return this.getRawButton(1);  //A button
   }
 
   public boolean getWantsElevatorL2() {
-    return this.getRawButton(3);
+    return this.getRawButton(3);  //X button
   }
 
   public boolean getWantsElevatorL3() {
-    return this.getRawButton(2);
+    return this.getRawButton(2);  //B button
   }
 
   public boolean getWantsElevatorL4() {
-    return this.getRawButton(4);
+    return this.getRawButton(4);  //Y button
   }
+
+  public boolean getWantsScoreCoral() {
+    return this.getRawButton(6);  //Right Bumper
+   }
 
   public boolean getWantsA1() {
     return this.getHatDown();

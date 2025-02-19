@@ -1,6 +1,7 @@
 package frc.robot.controls.controllers;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class DriverController extends FilteredController {
   private String m_smartDashboardKey = "DriverInput/";
@@ -27,20 +28,28 @@ public class DriverController extends FilteredController {
  public double getRightX(){
   return getRawAxis(4);
  }
-  public boolean getWantsSpeedMode() {
-    return this.getFilteredAxis(2) > k_triggerActivationThreshold;
-  }
+ // public boolean getWantsSpeedMode() {
+ //   return this.getFilteredAxis(2) > k_triggerActivationThreshold;
+ // }
 
-  public boolean getWantsScoreCoral() {
-    return this.getFilteredAxis(3) > k_triggerActivationThreshold;
-  }
+ // public boolean getWantsScoreCoral() {
+ //   return this.getRawButton(4);  //changed out to Left Bumper on Driver 
+ // }
 
   public boolean getWantsGroundAlgae() {
-    return this.getRawButton(5);
+    return this.getRawButton(6);  // this is Right Bumpter
   }
 
   public boolean getWantsScoreAlgae() {
-    return this.getRawButton(6);
+    return this.getRawButton(2);  // this is the B button
+  }
+  
+  public boolean getClimberUp(){
+    return this.getRawButton(4);  //this is the Y button
+  }
+
+  public boolean getClimberDown(){
+    return this.getRawButton(1);  //this is the A button
   }
 
   public void outputTelemetry() {

@@ -11,6 +11,7 @@ import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import au.grapplerobotics.CanBridge;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.MathUtil;
@@ -74,7 +75,8 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.startAutomaticCapture();
+    //CameraServer.startAutomaticCapture();
+    CanBridge.runTCP();
 
     setupLogging();
 
@@ -88,6 +90,10 @@ public class Robot extends LoggedRobot {
 
     // Set up the Field2d object for simulation
     SmartDashboard.putData("Field", m_field);
+  }
+  public Robot() {
+    CanBridge.runTCP();
+    // hook up LaserCAN
   }
 
   @Override
@@ -153,7 +159,7 @@ public class Robot extends LoggedRobot {
                 true);
 
     // FINAL DRIVER CONTROLS
-    if (m_driverController.getWantsScoreCoral()) {
+    if (m_operatorController.getWantsScoreCoral()) {
       scorePressed = true;
 
       if (m_elevator.getState() == Elevator.ElevatorState.STOW) {
@@ -163,7 +169,6 @@ public class Robot extends LoggedRobot {
       }
     } else if (scorePressed) {
       scorePressed = false;
-
       m_elevator.goToElevatorStow();
       m_coral.intake();
     } else if (m_driverController.getWantsScoreAlgae()) {
