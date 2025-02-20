@@ -27,7 +27,7 @@ public class Climber extends SubsystemBase {
     
     // CLIMBER MOTOR
     mMotor = new SparkMax(Constants.Climber.kClimberMotorId, MotorType.kBrushed);
-   
+  
      }
 
      public enum ClimberState {
@@ -42,6 +42,7 @@ public class Climber extends SubsystemBase {
     boolean is_climber_pos_control = false;
 
     ClimberState state = ClimberState.STOW;
+
   }
 
   /*-------------------------------- Generic Subsystem Functions --------------------------------*/
@@ -67,11 +68,11 @@ public class Climber extends SubsystemBase {
   }
 
   public void climberUp(){
-    mPeriodicIO.climber_power = 0.75;
+   mMotor.set(-0.75);
   }
 
   public void climberDown(){
-    mPeriodicIO.climber_power = -0.75;
+   mMotor.set(0.75);
   }
 
   

@@ -91,7 +91,7 @@ public class Coral extends Subsystem {
   @Override
   public void periodic() {
     mPeriodicIO.measurement = mLaserCAN.getMeasurement();
-
+  //  System.out.println(mLaserCAN.getMeasurement().distance_mm);
     checkAutoTasks();
   }
 

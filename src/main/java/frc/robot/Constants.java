@@ -33,10 +33,10 @@ public class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 11;
+    public static final int kFrontLeftDrivingCanId = 17;
     public static final int kRearLeftDrivingCanId = 13;
     public static final int kFrontRightDrivingCanId = 15;
-    public static final int kRearRightDrivingCanId = 17;
+    public static final int kRearRightDrivingCanId = 11;
 
     public static final int kFrontLeftTurningCanId = 10;
     public static final int kRearLeftTurningCanId = 12;
@@ -108,10 +108,10 @@ public class Constants {
     public static final int kMaxCurrent = 40;
 
     public static final double kStowHeight = 0.0;
-    public static final double kL2Height = 9.0;
-    public static final double kL3Height = 25.14;
-    public static final double kL4Height = 52.0;
-    public static final double kMaxHeight = 56.2;
+    public static final double kL2Height = 9.5;
+    public static final double kL3Height = 25.75;
+    public static final double kL4Height = 54.0;
+    public static final double kMaxHeight = 54.0;
     public static final double kGroundAlgaeHeight = 0.0;
     public static final double kScoreAlgaeHeight = 0.0;
     public static final double kLowAlgaeHeight = 24.8;
@@ -119,8 +119,8 @@ public class Constants {
   }
 
   public static class Coral {
-    public static final int kLeftMotorId = 4;  //updated to match our architecture
-    public static final int kRightMotorId = 5; //uodated to match our architecture
+    public static final int kLeftMotorId = 4;  // updated to match our architecture
+    public static final int kRightMotorId = 5; // updated to match our architecture
 
     public static final int kLaserId = 33;  //updated to match our architecture
     public static final int kColorId = 32;  //updated to match our architecture but this isn't used
@@ -132,11 +132,11 @@ public class Constants {
     public static final double kD = 0.0;
     public static final double kIZone = 0;
 
-    public static final double kIntakeSpeed = 0.4;
-    public static final double kReverseSpeed = -0.4;
-    public static final double kL1Speed = 0.5;
-    public static final double kL24Speed = 0.5;
-    public static final double kIndexSpeed = 0.1;
+    public static final double kIntakeSpeed = 0.75;
+    public static final double kReverseSpeed = -0.75;
+    public static final double kL1Speed = 0.40;
+    public static final double kL24Speed = 0.10;
+    public static final double kIndexSpeed = 0.45;
     public static final double kSpeedDifference = kL1Speed * 0.5;
   }
 
@@ -164,14 +164,14 @@ public class Constants {
 
     public static final double kStowAngle = 233.0;
     public static final double kDeAlgaeAngle = 250.0;
-    public static final double kGroundIntakeAngle = 330.0;
+    public static final double kGroundIntakeAngle = 335.0;
 
     // INTAKE
     public static final int kMaxIntakeCurrent = 20;
 
-    public static final double kIntakeSpeed = 0.8;
+    public static final double kIntakeSpeed = 1.0;
     public static final double kEjectSpeed = -0.5;
-    public static final double kGroundIntakeSpeed = -0.5;
+    public static final double kGroundIntakeSpeed = -0.75;
   }
 
   

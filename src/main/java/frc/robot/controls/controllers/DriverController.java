@@ -32,9 +32,9 @@ public class DriverController extends FilteredController {
  //   return this.getFilteredAxis(2) > k_triggerActivationThreshold;
  // }
 
- // public boolean getWantsScoreCoral() {
- //   return this.getRawButton(4);  //changed out to Left Bumper on Driver 
- // }
+ public boolean getWantsScoreCoral() {
+  return this.getRawButton(4);  //changed out to Left Bumper on Driver 
+ }
 
   public boolean getWantsGroundAlgae() {
     return this.getRawButton(6);  // this is Right Bumpter
@@ -48,9 +48,18 @@ public class DriverController extends FilteredController {
     return this.getRawButton(4);  //this is the Y button
   }
 
+  public boolean getClimberStopUp(){
+    return this.getRawButtonReleased(4);
+  }
+
   public boolean getClimberDown(){
     return this.getRawButton(1);  //this is the A button
   }
+  
+  public boolean getClimberStopDown(){
+    return this.getRawButtonReleased(1);
+  }
+
 
   public void outputTelemetry() {
     //SmartDashboard.putNumber(m_smartDashboardKey + "Forward", getForwardAxis());

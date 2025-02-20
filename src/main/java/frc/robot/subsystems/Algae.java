@@ -115,7 +115,7 @@ public class Algae extends Subsystem {
   public void writePeriodicOutputs() {
     mWristMotor.set(mPeriodicIO.wrist_voltage);
     mIntakeMotor.set(mPeriodicIO.intake_power);
-    System.out.println(getWristAngle());
+   // System.out.println(getWristAngle());
   }
 
   @Override

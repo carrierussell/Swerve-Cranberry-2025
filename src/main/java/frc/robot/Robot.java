@@ -179,15 +179,23 @@ public class Robot extends LoggedRobot {
       m_algae.groundIntake();
     }  else if (m_driverController.getClimberUp()){
         m_climber.climberUp();
-     } else if(m_driverController.getClimberDown()){
-      m_climber.climberDown();       
-    }
+    } 
+    else if(m_driverController.getClimberStopUp()){
+        m_climber.stopMotor();
+    } 
+    else if(m_driverController.getClimberDown()){
+      m_climber.climberDown();      
+    } 
+    else if(m_driverController.getClimberStopDown()){
+      m_climber.stopMotor();
+    } 
   
 
     // FINAL OPERATOR CONTROLS
     if (m_operatorController.getWantsElevatorStow()) {
       m_elevator.goToElevatorStow();
       m_algae.stow();
+      m_algae.stopAlgae();
     } else if (m_operatorController.getWantsElevatorL2()) {
       m_elevator.goToElevatorL2();
       m_algae.stow();
