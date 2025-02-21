@@ -60,6 +60,10 @@ public class DriverController extends FilteredController {
     return this.getRawButtonReleased(1);
   }
 
+  public boolean getWantsGyroReset(){
+    return this.getRawButton(7);  //this should be the start button
+  }
+
 
   public void outputTelemetry() {
     //SmartDashboard.putNumber(m_smartDashboardKey + "Forward", getForwardAxis());

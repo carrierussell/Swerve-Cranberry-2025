@@ -189,6 +189,10 @@ public class Robot extends LoggedRobot {
     else if(m_driverController.getClimberStopDown()){
       m_climber.stopMotor();
     } 
+
+    else if(m_driverController.getWantsGyroReset()){   
+      m_drive.zeroHeading();   //allow the driver to reset the field relativity during a match
+    }
   
 
     // FINAL OPERATOR CONTROLS

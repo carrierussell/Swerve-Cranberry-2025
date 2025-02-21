@@ -91,7 +91,7 @@ public class Coral extends Subsystem {
   @Override
   public void periodic() {
     mPeriodicIO.measurement = mLaserCAN.getMeasurement();
-  //  System.out.println(mLaserCAN.getMeasurement().distance_mm);
+   System.out.println(mLaserCAN.getMeasurement().distance_mm);
     checkAutoTasks();
   }
 
@@ -131,7 +131,7 @@ public class Coral extends Subsystem {
   /*---------------------------------- Custom Public Functions ----------------------------------*/
 
   public boolean isHoldingCoralViaLaserCAN() {
-    return mPeriodicIO.measurement.distance_mm < 75.0;
+    return mPeriodicIO.measurement.distance_mm < 20.0;  //this is updated based on the sensor readings was 75
   }
 
   public void setSpeed(double rpm) {
@@ -187,7 +187,7 @@ public class Coral extends Subsystem {
         if (isHoldingCoralViaLaserCAN()) {
           mPeriodicIO.index_debounce++;
 
-          if (mPeriodicIO.index_debounce > 10) {
+          if (mPeriodicIO.index_debounce > 10) {  //was 10 update CAR 2/20
             mPeriodicIO.index_debounce = 0;
             index();
           }
