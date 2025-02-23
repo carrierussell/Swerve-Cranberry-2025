@@ -107,7 +107,7 @@ public class Algae extends Subsystem {
     double pidCalc = mWristPIDController.calculate(getWristAngle(), mPeriodicIO.wrist_target_angle);
     double ffCalc = mWristFeedForward.calculate(Math.toRadians(getWristReferenceToHorizontal()),
         Math.toRadians(mWristPIDController.getSetpoint().velocity));
-
+  System.out.println(getWristAngle());
     mPeriodicIO.wrist_voltage = pidCalc + ffCalc;
   }
 
@@ -149,7 +149,6 @@ public class Algae extends Subsystem {
 
   public void stow() {
     mPeriodicIO.wrist_target_angle = Constants.Algae.kStowAngle;
-
     mPeriodicIO.state = IntakeState.STOW;
     // mPeriodicIO.intake_power = 0.0;
   }
@@ -159,6 +158,7 @@ public class Algae extends Subsystem {
     mPeriodicIO.intake_power = Constants.Algae.kIntakeSpeed;
 
     mPeriodicIO.state = IntakeState.DEALGAE;
+    checkAngle();  //added as a helper function
   }
 
   public void score() {
@@ -174,11 +174,18 @@ public class Algae extends Subsystem {
     mPeriodicIO.intake_power = Constants.Algae.kGroundIntakeSpeed;
 
     mPeriodicIO.state = IntakeState.GROUND;
+    checkAngle();  //added as a helper function
   }
 
   public void stopAlgae() {
     mPeriodicIO.intake_power = 0.0;
     mPeriodicIO.wrist_target_angle = Constants.Algae.kStowAngle;
+  }
+
+  public void checkAngle() {   // add in helper function to move arm back so it doesn't over rotate
+    if(getWristAngle() < 30 ){
+      mPeriodicIO.wrist_target_angle = 300;
+    }
   }
 
   /*---------------------------------- Custom Private Functions ---------------------------------*/

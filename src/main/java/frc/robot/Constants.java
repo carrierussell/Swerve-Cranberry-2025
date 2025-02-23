@@ -140,9 +140,14 @@ public class Constants {
     public static final double kIntakeSpeed = 0.35;
     public static final double kReverseSpeed = -0.35;
     public static final double kL1Speed = 0.20;
-    public static final double kL24Speed = 0.10;
+    public static final double kL24Speed = 0.20;
     public static final double kIndexSpeed = 0.2;
-    public static final double kSpeedDifference = kL1Speed * 0.5;
+    public static final double kSpeedDifference = kL1Speed * 0.7
+    
+    
+    
+    
+    ;
 
     // Auto constants for Coral
     public static final double kCoralScoreTime = 2.0; // Time it takes for the coral to be scored.
@@ -171,7 +176,7 @@ public class Constants {
     public static final double kWristMaxAcceleration = 1380.0;
 
     public static final double kStowAngle = 233.0;
-    public static final double kDeAlgaeAngle = 250.0;
+    public static final double kDeAlgaeAngle = 280.0;
     public static final double kGroundIntakeAngle = 350.0;
 
     // INTAKE
