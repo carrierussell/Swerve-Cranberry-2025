@@ -124,8 +124,11 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    String selectedAutoName = SmartDashboard.getString("Auto Selector", Autons.autoNames[0]);
+    Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator);
+  
     System.out.println("Auto selected: " + m_autoSelected);
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     //m_robotContainer.setIsAuto(true);
   
     /*  m_currentTask = m_autoRunner.getNextTask();
