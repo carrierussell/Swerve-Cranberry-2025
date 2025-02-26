@@ -31,7 +31,7 @@ public final class Autons {
     }
     */
     public static Supplier<Boolean> getLEDState;
-    public static String[] autoNames = {"Leave", "TrajectoryTest" };
+    public static String[] autoNames = {"Leave", "Leave Trajectory", "Leave and Score" };
 
     // Initializes a DigitalInput on DIO 0 for the light break sensor
   //  static DigitalInput lightBeamSensor = new DigitalInput (1);
