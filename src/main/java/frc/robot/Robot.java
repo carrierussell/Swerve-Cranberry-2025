@@ -76,9 +76,7 @@ public class Robot extends LoggedRobot {
  // private Task m_currentTask;
   //private AutoRunner m_autoRunner = AutoRunner.getInstance();
 
-  // A chooser for autonomous commands
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-  /**
+    /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
@@ -136,9 +134,15 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     String selectedAutoName = SmartDashboard.getString("Auto Selector", Autons.autoNames[0]);
-    Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator);
+    Command autoCommand = Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator);
+
+    if(autoCommand != null) {
+    autoCommand.schedule();
+    };
   
     System.out.println("Auto selected: " + m_autoSelected);
+
+
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     //m_robotContainer.setIsAuto(true);
   
