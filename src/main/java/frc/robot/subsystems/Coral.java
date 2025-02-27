@@ -131,7 +131,7 @@ public class Coral extends Subsystem {
   /*---------------------------------- Custom Public Functions ----------------------------------*/
 
   public boolean isHoldingCoralViaLaserCAN() {
-    return mPeriodicIO.measurement.distance_mm < 20.0;  //this is updated based on the sensor readings was 75 
+    return mPeriodicIO.measurement.distance_mm < 15.0;  //this is updated based on the sensor readings was 75 
   }
 
   public void setSpeed(double rpm) {

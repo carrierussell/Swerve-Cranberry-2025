@@ -94,6 +94,7 @@ public class Algae extends Subsystem {
   private static class PeriodicIO {
     double wrist_target_angle = 0.0;
     double wrist_voltage = 0.0;
+    double wrist_manual = 0.0;
 
     double intake_power = 0.0;
 
@@ -109,13 +110,14 @@ public class Algae extends Subsystem {
         Math.toRadians(mWristPIDController.getSetpoint().velocity));
   System.out.println(getWristAngle());
     mPeriodicIO.wrist_voltage = pidCalc + ffCalc;
+    mPeriodicIO.wrist_manual = ffCalc;
   }
 
   @Override
   public void writePeriodicOutputs() {
     mWristMotor.set(mPeriodicIO.wrist_voltage);
     mIntakeMotor.set(mPeriodicIO.intake_power);
-   // System.out.println(getWristAngle());
+   
   }
 
   @Override
@@ -204,6 +206,15 @@ public class Algae extends Subsystem {
   public IntakeState getState() {
     return mPeriodicIO.state;
   }
+
+  public void getAlgaeUp(){
+    mWristMotor.set(mPeriodicIO.wrist_manual);
+  }
+
+  public void getAlgaeDown(){
+    mWristMotor.set(-mPeriodicIO.wrist_manual);
+  }
+
 
   // public double getSpeedFromState(IntakeState state) {
   // switch (state) {

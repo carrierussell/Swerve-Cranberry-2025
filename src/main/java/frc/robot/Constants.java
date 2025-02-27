@@ -114,8 +114,8 @@ public class Constants {
     public static final double kMaxHeight = 54.0;
     public static final double kGroundAlgaeHeight = 0.0;
     public static final double kScoreAlgaeHeight = 0.0;
-    public static final double kLowAlgaeHeight = 24.8;
-    public static final double kHighAlgaeHeight = 42.5;
+    public static final double kLowAlgaeHeight = 13.0;
+    public static final double kHighAlgaeHeight = 30;
 
     public static final double kSetpointThreshold = 2.0; // Acceptable distance in encoder units between the elevator's actual position and its current target height.
 
@@ -137,10 +137,10 @@ public class Constants {
     public static final double kD = 0.0;
     public static final double kIZone = 0;
 
-    public static final double kIntakeSpeed = 0.35;
+    public static final double kIntakeSpeed = 0.25;
     public static final double kReverseSpeed = -0.35;
     public static final double kL1Speed = 0.20;
-    public static final double kL24Speed = 0.20;
+    public static final double kL24Speed = 0.30;
     public static final double kIndexSpeed = 0.2;
     public static final double kSpeedDifference = kL1Speed * 0.7
     
@@ -176,11 +176,11 @@ public class Constants {
     public static final double kWristMaxAcceleration = 1380.0;
 
     public static final double kStowAngle = 233.0;
-    public static final double kDeAlgaeAngle = 280.0;
+    public static final double kDeAlgaeAngle = 265.0;
     public static final double kGroundIntakeAngle = 350.0;
 
     // INTAKE
-    public static final int kMaxIntakeCurrent = 20;
+    public static final int kMaxIntakeCurrent = 23;
 
     public static final double kIntakeSpeed = 1.0;
     public static final double kEjectSpeed = -0.5;

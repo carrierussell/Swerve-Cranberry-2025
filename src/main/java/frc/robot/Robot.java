@@ -19,7 +19,9 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 //import frc.robot.autonomous.AutoRunner;
@@ -35,6 +37,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Subsystem;
 import frc.robot.subsystems.leds.LEDs;
 import frc.robot.Constants;
+import frc.robot.commands.Autons;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -69,6 +72,13 @@ public class Robot extends LoggedRobot {
  // private Task m_currentTask;
   //private AutoRunner m_autoRunner = AutoRunner.getInstance();
 
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
+
   // Simulation stuff
   private final Field m_field = Field.getInstance();
 
@@ -77,10 +87,13 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
-    //CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
     CanBridge.runTCP();
 
     setupLogging();
+    SmartDashboard.putStringArray("Auto List", Autons.autoNames);
+ 
+    SmartDashboard.putData("auto chooser test", m_chooser);
 
     // Add all subsystems to the list
     //m_allSubsystems.add(m_drive);
@@ -159,7 +172,8 @@ public class Robot extends LoggedRobot {
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), 0.05),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), 0.05),
                 true);
-
+    
+  
     // FINAL DRIVER CONTROLS
     if (m_operatorController.getWantsScoreCoral()) {
       scorePressed = true;
@@ -189,7 +203,6 @@ public class Robot extends LoggedRobot {
     else if(m_driverController.getClimberStopDown()){
       m_climber.stopMotor();
     } 
-
     else if(m_driverController.getWantsGyroReset()){   
       m_drive.zeroHeading();   //allow the driver to reset the field relativity during a match
     }
@@ -222,7 +235,18 @@ public class Robot extends LoggedRobot {
       m_algae.groundIntake();
     } else if (m_operatorController.getWantsCoralIntake()) {
       m_coral.intake();
-    }
+    } /*else if(m_operatorController.getMoveAlgaeUp()>0.5){  //add to try manual algae control
+      m_algae.getAlgaeUp();
+        if(m_operatorController.getMoveAlgaeUp()<0.5){
+        m_algae.stopAlgae();
+      }
+    } else if(m_operatorController.getMoveAlgaeDown()>0.5){
+      m_algae.getAlgaeDown();
+        if(m_operatorController.getMoveAlgaeDown()<0.5){
+        m_algae.stopAlgae();
+      }
+    } */
+    
 
     // if (m_driverController.getWantsScoreCoral()) {
     // if (m_elevator.getState() == Elevator.ElevatorState.STOW) {

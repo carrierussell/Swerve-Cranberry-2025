@@ -58,4 +58,13 @@ public class OperatorController extends FilteredController {
   public boolean getWantsStopAlgae() {
     return this.getHatRight();
   }
+
+  public double getMoveAlgaeUp(){
+    return this.getRawAxis(3);
+  }
+
+ public double getMoveAlgaeDown(){
+    return this.getRawAxis(4);
+  }
+
 }
