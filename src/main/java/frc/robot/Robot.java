@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-//import frc.robot.autonomous.AutoRunner;
+import frc.robot.commands.Autons;
 //import frc.robot.autonomous.tasks.Task;
 import frc.robot.controls.controllers.DriverController;
 import frc.robot.controls.controllers.OperatorController;
@@ -40,19 +40,23 @@ import frc.robot.Constants;
 import frc.robot.commands.Autons;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to
+ * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the
- * name of this class or
- * the package after creating this project, you must also update the
- * build.gradle file in the
- * project.
+ * name of this class or  the package after creating this project, you must also update the
+ * build.gradle file in the  project.
  */
+
 public class Robot extends LoggedRobot {
   // Controller
   private final DriverController m_driverController = new DriverController(0, true, true);
   private final OperatorController m_operatorController = new OperatorController(1, true, true);
   private final GenericHID sysIdController = new GenericHID(2);
+  private Command m_autonomousCommand;  //autons
+  private String m_autoSelected;  //autons
+  private RobotContainer m_robotContainer; //autons
+
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();   //autons
 
   // private final SlewRateLimiter m_speedLimiter = new
   // SlewRateLimiter(Drivetrain.kMaxAcceleration);
@@ -105,6 +109,8 @@ public class Robot extends LoggedRobot {
 
     // Set up the Field2d object for simulation
     SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putStringArray("Auto List", Autons.autoNames);
+     SmartDashboard.putData("auto chooser test", m_chooser);
   }
   public Robot() {
     CanBridge.runTCP();
@@ -124,11 +130,19 @@ public class Robot extends LoggedRobot {
     if (this.isTestEnabled()) {
       CommandScheduler.getInstance().run();
     }
-  }
+    }
+    
 
   @Override
   public void autonomousInit() {
-   /*  m_currentTask = m_autoRunner.getNextTask();
+    String selectedAutoName = SmartDashboard.getString("Auto Selector", Autons.autoNames[0]);
+    Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator);
+  
+    System.out.println("Auto selected: " + m_autoSelected);
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_robotContainer.setIsAuto(true);
+  
+    /*  m_currentTask = m_autoRunner.getNextTask();
 
     // Start the first task
     if (m_currentTask != null) {
@@ -155,6 +169,9 @@ public class Robot extends LoggedRobot {
         }
       }
     }*/
+
+    CommandScheduler.getInstance().run();   //autons - should run the commandScheduler
+  
   }
 
   @Override

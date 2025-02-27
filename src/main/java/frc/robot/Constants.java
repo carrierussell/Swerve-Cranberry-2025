@@ -108,9 +108,9 @@ public class Constants {
     public static final int kMaxCurrent = 40;
 
     public static final double kStowHeight = 0.0;
-    public static final double kL2Height = 10.0;
+    public static final double kL2Height = 9.5;
     public static final double kL3Height = 25.75;
-    public static final double kL4Height = 54.5;
+    public static final double kL4Height = 54.0;
     public static final double kMaxHeight = 54.0;
     public static final double kGroundAlgaeHeight = 0.0;
     public static final double kScoreAlgaeHeight = 0.0;
