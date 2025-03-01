@@ -14,7 +14,7 @@ public class OperatorController extends FilteredController {
   private final double k_triggerActivationThreshold = 0.5;
 
   // CORAL
-  public boolean getWantsCoralIntake() {
+  public boolean getWantsStopCoral() {
     return this.getRawButton(5);  //Left Bumper
   }
 

@@ -131,7 +131,7 @@ public class Coral extends Subsystem {
   /*---------------------------------- Custom Public Functions ----------------------------------*/
 
   public boolean isHoldingCoralViaLaserCAN() {
-    return mPeriodicIO.measurement.distance_mm < 20.0;
+    return mPeriodicIO.measurement.distance_mm < 10.0;
   }
 
   public void setSpeed(double rpm) {
@@ -187,7 +187,7 @@ public class Coral extends Subsystem {
         if (isHoldingCoralViaLaserCAN()) {
           mPeriodicIO.index_debounce++;
           System.out.println(mPeriodicIO.state);
-          if (mPeriodicIO.index_debounce > 10) {
+          if (mPeriodicIO.index_debounce > 8) {
             mPeriodicIO.index_debounce = 0;
             index();
           

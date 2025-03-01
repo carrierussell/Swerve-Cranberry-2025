@@ -18,7 +18,7 @@ import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 
-import org.opencv.imgproc.Imgproc;
+//import org.opencv.imgproc.Imgproc;
 import org.opencv.core.*;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -62,7 +62,7 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer; //autons
 
   private Point center = new Point(170,120);
-  private Mat rotationMatrix = Imgproc.getRotationMatrix2D(center, 180,1);
+ // private Mat rotationMatrix = Imgproc.getRotationMatrix2D(center, 180,1);
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();   //autons
@@ -99,7 +99,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
-    //CameraServer.startAutomaticCapture();   //This image is upside down.  Using the Thread with rotated Image to adjust
+    CameraServer.startAutomaticCapture();   //This image is upside down.  Using the Thread with rotated Image to adjust
     CanBridge.runTCP();
 
     setupLogging();
@@ -126,7 +126,7 @@ public class Robot extends LoggedRobot {
     CanBridge.runTCP();
     // hook up LaserCAN
 
-    m_visionThread =
+    /*m_visionThread =
         new Thread(
             () -> {
     // Get the UsbCamera from CameraServer
@@ -159,6 +159,7 @@ public class Robot extends LoggedRobot {
     });
     m_visionThread.setDaemon(true);
     m_visionThread.start();
+    */
   }
 
 
@@ -301,7 +302,7 @@ public class Robot extends LoggedRobot {
       m_algae.stow();
     } else if (m_operatorController.getWantsGroundAlgae()) {
       m_algae.groundIntake();
-    } else if (m_operatorController.getWantsCoralIntake()) {
+    } else if (m_operatorController.getWantsStopCoral()) {
       m_coral.intake();
     } /*else if(m_operatorController.getMoveAlgaeUp()>0.5){  //add to try manual algae control
       m_algae.getAlgaeUp();

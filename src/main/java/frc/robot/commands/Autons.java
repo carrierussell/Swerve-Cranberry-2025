@@ -31,7 +31,7 @@ public final class Autons {
     }
     */
     public static Supplier<Boolean> getLEDState;
-    public static String[] autoNames = {"Leave", "Leave Trajectory", "Leave and Score" };
+    public static String[] autoNames = {"Leave", "Leave Trajectory", "Leave and Score L1" , "Leave and ScoreL3"};;
 
     // Initializes a DigitalInput on DIO 0 for the light break sensor
   //  static DigitalInput lightBeamSensor = new DigitalInput (1);
@@ -60,7 +60,10 @@ public final class Autons {
         case "Leave Trajectory":                      //test to see if this moves the robot how we need it
         command = leaveTrajectory(robotDrive);
         break;
-        case "Leave and Score":
+        case "Leave and ScoreL1":
+        command = leaveAndScoreL1(robotDrive, coral, elevator);
+        break;
+        case "Leave and Score L3":
         command = leaveAndScoreL3(robotDrive, coral, elevator);
         break;
         
@@ -93,7 +96,16 @@ public final class Autons {
     public static Command scoreCoralL3(Coral coral, Elevator elevator){
         return Commands.sequence(
             new RunCommand(() -> elevator.goToElevatorL3()).withTimeout(Constants.Elevator.kElevatorMaxMoveTime), 
-            new RunCommand(() -> coral.scoreL24()).withTimeout(Constants.Coral.kCoralScoreTime)
+            new RunCommand(() -> coral.scoreL24()).withTimeout(Constants.Coral.kCoralScoreTime),
+            new RunCommand(() -> coral.stopCoral()).withTimeout(1.0) //add this to stop coral after it scores
+        );
+    }
+
+     //score Coral in L1()
+     public static Command scoreCoralL1(Coral coral, Elevator elevator){
+        return Commands.sequence(
+            new RunCommand(() -> coral.scoreL24()).withTimeout(Constants.Coral.kCoralScoreTime),
+            new RunCommand(() -> coral.stopCoral()).withTimeout(1.0) //add this to stop coral after it scores
         );
     }
 
@@ -105,28 +117,69 @@ public final class Autons {
         );
     }
 
-    public static Command leaveAndScoreL3(DriveSubsystem robotDrive, Coral coral, Elevator elevator) {
+    public static Command leaveAndScoreL1(DriveSubsystem robotDrive, Coral coral, Elevator elevator) {
         return Commands.sequence(
-            leave(robotDrive), // you could combine the driving in parallel with lifting the elevator, to really maximize time. See next command "leaveAndScoreL3_Parallel".
-            scoreCoralL3(coral, elevator)
+            leaveTrajectory(robotDrive), // you could combine the driving in parallel with lifting the elevator, to really maximize time. See next command "leaveAndScoreL3_Parallel".
+            scoreCoralL1(coral, elevator)
         );
     }
 
-    public static Command leaveAndScoreL3_Parallel(DriveSubsystem robotDrive, Coral coral, Elevator elevator) {
+    public static Command leaveAndScoreL3(DriveSubsystem robotDrive, Coral coral, Elevator elevator) {
         return Commands.sequence(
             // This parallel command will run "leave" and "goToElevatorL3" at the same time. 
             // goToElevatorL3 will only run once, which is all that is needed to set the target height for the elevator. The elevator will always move towards the target height.
             // The command will exit and move onto scoring after "leave" finishes (after robot stops driving).
             Commands.parallel(
-                leave(robotDrive),
+                leaveTrajectory(robotDrive),
                 Commands.runOnce(() -> elevator.goToElevatorL3(), elevator)
             ),
             scoreCoralL3(coral, elevator)
         );
     }
 
-       
-     // Command to test swerve trajectory following in Auto
+    public static Command leaveTrajectory(DriveSubsystem robotDrive) {
+        // Create config for trajectory
+        TrajectoryConfig config =
+            new TrajectoryConfig(
+                    AutoConstants.kMaxSpeedMetersPerSecond,
+                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(DriveConstants.kDriveKinematics);
+    
+         // Generate trajectory (moves forward meters)
+        Trajectory leaveTrajectory = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, new Rotation2d(0)),
+            List.of(),
+            new Pose2d(1.73, 0, new Rotation2d(0)),
+            config
+        );
+    
+        var thetaController =
+            new ProfiledPIDController(
+                AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    
+        SwerveControllerCommand swerveControllerCommand =
+            new SwerveControllerCommand(
+                leaveTrajectory,
+                robotDrive::getPose, // Functional interface to feed supplier
+                DriveConstants.kDriveKinematics,
+    
+                // Position controllers
+                new PIDController(AutoConstants.kPXController, 0, 0),
+                new PIDController(AutoConstants.kPYController, 0, 0),
+                thetaController,
+                robotDrive::setModuleStates,
+                robotDrive);
+    
+        // Reset odometry to the starting pose of the trajectory.
+        robotDrive.resetOdometry(leaveTrajectory.getInitialPose());
+    
+        // Run path following command, then stop at the end.
+        return swerveControllerCommand.andThen(() -> robotDrive.drive(0, 0, 0, false));
+    }
+
+    // Command to test swerve trajectory following in Auto
     public static Command testSimpleTrajectory(DriveSubsystem robotDrive) {
         // Create config for trajectory
         TrajectoryConfig config =
@@ -172,47 +225,6 @@ public final class Autons {
         return swerveControllerCommand.andThen(() -> robotDrive.drive(0, 0, 0, false));
     }
 
-    public static Command leaveTrajectory(DriveSubsystem robotDrive) {
-        // Create config for trajectory
-        TrajectoryConfig config =
-            new TrajectoryConfig(
-                    AutoConstants.kMaxSpeedMetersPerSecond,
-                    AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                // Add kinematics to ensure max speed is actually obeyed
-                .setKinematics(DriveConstants.kDriveKinematics);
-    
-         // Generate trajectory (moves forward 2 meters)
-        Trajectory leaveTrajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(),
-            new Pose2d(2, 0, new Rotation2d(0)),
-            config
-        );
-    
-        var thetaController =
-            new ProfiledPIDController(
-                AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-        thetaController.enableContinuousInput(-Math.PI, Math.PI);
-    
-        SwerveControllerCommand swerveControllerCommand =
-            new SwerveControllerCommand(
-                leaveTrajectory,
-                robotDrive::getPose, // Functional interface to feed supplier
-                DriveConstants.kDriveKinematics,
-    
-                // Position controllers
-                new PIDController(AutoConstants.kPXController, 0, 0),
-                new PIDController(AutoConstants.kPYController, 0, 0),
-                thetaController,
-                robotDrive::setModuleStates,
-                robotDrive);
-    
-        // Reset odometry to the starting pose of the trajectory.
-        robotDrive.resetOdometry(leaveTrajectory.getInitialPose());
-    
-        // Run path following command, then stop at the end.
-        return swerveControllerCommand.andThen(() -> robotDrive.drive(0, 0, 0, false));
-    }
     
 
  
