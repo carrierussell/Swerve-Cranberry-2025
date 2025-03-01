@@ -186,17 +186,18 @@ public class Coral extends Subsystem {
       case INTAKE:
         if (isHoldingCoralViaLaserCAN()) {
           mPeriodicIO.index_debounce++;
-
+          System.out.println(mPeriodicIO.state);
           if (mPeriodicIO.index_debounce > 10) {
             mPeriodicIO.index_debounce = 0;
             index();
+          
           }
         }
         break;
       case INDEX:
         if (!isHoldingCoralViaLaserCAN()) {
           stopCoral();
-
+          System.out.println(mPeriodicIO.state);  //get rid of this later
           mPeriodicIO.state = IntakeState.READY;
           m_leds.setColor(Color.kBlue);
         }

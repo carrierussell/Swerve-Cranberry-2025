@@ -14,6 +14,12 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 import au.grapplerobotics.CanBridge;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
+
+import org.opencv.imgproc.Imgproc;
+import org.opencv.core.*;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -55,6 +61,9 @@ public class Robot extends LoggedRobot {
   private String m_autoSelected;  //autons
   private RobotContainer m_robotContainer; //autons
 
+  private Point center = new Point(170,120);
+  private Mat rotationMatrix = Imgproc.getRotationMatrix2D(center, 180,1);
+
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();   //autons
 
@@ -71,8 +80,9 @@ public class Robot extends LoggedRobot {
   private final Climber m_climber = new Climber();
 
   public final LEDs m_leds = LEDs.getInstance();
+  Thread m_visionThread;
 
-  // Auto stuff
+ // Auto stuff
  // private Task m_currentTask;
   //private AutoRunner m_autoRunner = AutoRunner.getInstance();
 
@@ -89,7 +99,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.startAutomaticCapture();
+    //CameraServer.startAutomaticCapture();   //This image is upside down.  Using the Thread with rotated Image to adjust
     CanBridge.runTCP();
 
     setupLogging();
@@ -109,11 +119,48 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putData("Field", m_field);
     SmartDashboard.putStringArray("Auto List", Autons.autoNames);
      SmartDashboard.putData("auto chooser test", m_chooser);
+
+
   }
   public Robot() {
     CanBridge.runTCP();
     // hook up LaserCAN
+
+    m_visionThread =
+        new Thread(
+            () -> {
+    // Get the UsbCamera from CameraServer
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    // Set the resolution
+    camera.setResolution(320, 240);
+    // Get a CvSink. This will capture Mats from the camera
+    CvSink cvSink = CameraServer.getVideo();
+    // Setup a CvSource. This will send images back to the Dashboard
+    CvSource outputStream = CameraServer.putVideo("Rotated Image", 320, 240);
+    // Mats are very memory expensive. Lets reuse this Mat.
+    Mat mat = new Mat();
+    // This cannot be 'true'. The program will never exit if it is. This lets the robot stop this thread when restarting robot code or
+    // deploying.
+    
+    while (!Thread.interrupted()) {
+      // Tell the CvSink to grab a frame from the camera and put it in the source mat.  If there is an error notify the output.
+      if (cvSink.grabFrame(mat) == 0) {
+        // Send the output the error.
+        outputStream.notifyError(cvSink.getError());
+        // skip the rest of the current iteration
+        continue;
+      }
+       // Rotate image 180 degrees
+       Mat rotatedMat = new Mat();
+      Imgproc.warpAffine(mat, rotatedMat, rotationMatrix, mat.size());
+       // Give the output stream a new image to display
+    outputStream.putFrame(rotatedMat);
+    } 
+    });
+    m_visionThread.setDaemon(true);
+    m_visionThread.start();
   }
+
 
   @Override
   public void robotPeriodic() {
@@ -343,5 +390,6 @@ public class Robot extends LoggedRobot {
     }
 
     Logger.start();
+
   }
 }

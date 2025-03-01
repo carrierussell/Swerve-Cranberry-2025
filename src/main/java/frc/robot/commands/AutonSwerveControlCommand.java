@@ -19,7 +19,7 @@ public class AutonSwerveControlCommand extends Command {
 public AutonSwerveControlCommand(DriveSubsystem subsystem, double forward, double right, double omega, double time, boolean fieldRel) {
     m_drive = subsystem;
     // remove add negative signs below if robot is moving the unintended way
-    m_forwardSpeed = -forward;
+    m_forwardSpeed = forward;  //2/27 changed from negative to positive to have robot move backwards
     m_rightSpeed = -right;
     m_omega = omega;
     m_time = time;

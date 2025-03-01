@@ -31,7 +31,7 @@ public final class Autons {
     }
     */
     public static Supplier<Boolean> getLEDState;
-    public static String[] autoNames = {"Leave", "Trajectory", "Leave and Score" };
+    public static String[] autoNames = {"Leave", "Leave Trajectory", "Leave and Score" };
 
     // Initializes a DigitalInput on DIO 0 for the light break sensor
   //  static DigitalInput lightBeamSensor = new DigitalInput (1);
@@ -101,7 +101,7 @@ public final class Autons {
     // Command to drive backwards for certain amount of time, hopefully to leave the starting zone in auto period.
     public static Command leave(DriveSubsystem robotDrive) {
         return Commands.sequence(
-            startZoneMovement(robotDrive, 0.75 , 1.0)
+            startZoneMovement(robotDrive, 0.75 , 1.5)
         );
     }
 
