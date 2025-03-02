@@ -68,7 +68,7 @@ public class Coral extends Subsystem {
     mLaserCAN = new LaserCan(Constants.Coral.kLaserId);
     try {
       mLaserCAN.setRangingMode(LaserCan.RangingMode.SHORT);
-      mLaserCAN.setRegionOfInterest(new LaserCan.RegionOfInterest(8, 8, 16, 16));
+      mLaserCAN.setRegionOfInterest(new LaserCan.RegionOfInterest(8, 8, 4, 4));  //adjust this again if needed
       mLaserCAN.setTimingBudget(LaserCan.TimingBudget.TIMING_BUDGET_33MS);
     } catch (ConfigurationFailedException e) {
       System.out.println("Configuration failed! " + e);
@@ -91,7 +91,7 @@ public class Coral extends Subsystem {
   @Override
   public void periodic() {
     mPeriodicIO.measurement = mLaserCAN.getMeasurement();
-   System.out.println(mLaserCAN.getMeasurement().distance_mm);
+   System.out.println("This is the LaserCAN reading: " + mLaserCAN.getMeasurement().distance_mm);
     checkAutoTasks();
   }
 
@@ -131,7 +131,7 @@ public class Coral extends Subsystem {
   /*---------------------------------- Custom Public Functions ----------------------------------*/
 
   public boolean isHoldingCoralViaLaserCAN() {
-    return mPeriodicIO.measurement.distance_mm < 10.0;
+    return mPeriodicIO.measurement.distance_mm < 2.0;
   }
 
   public void setSpeed(double rpm) {
@@ -182,11 +182,12 @@ public class Coral extends Subsystem {
   /*---------------------------------- Custom Private Functions ---------------------------------*/
 
   private void checkAutoTasks() {
+    
     switch (mPeriodicIO.state) {
       case INTAKE:
         if (isHoldingCoralViaLaserCAN()) {
           mPeriodicIO.index_debounce++;
-          System.out.println(mPeriodicIO.state);
+          System.out.println("checkAutoTasks Intake");
           if (mPeriodicIO.index_debounce > 8) {
             mPeriodicIO.index_debounce = 0;
             index();
@@ -197,7 +198,7 @@ public class Coral extends Subsystem {
       case INDEX:
         if (!isHoldingCoralViaLaserCAN()) {
           stopCoral();
-          System.out.println(mPeriodicIO.state);  //get rid of this later
+          System.out.println("checkAutoTasks Index");  //get rid of this later
           mPeriodicIO.state = IntakeState.READY;
           m_leds.setColor(Color.kBlue);
         }

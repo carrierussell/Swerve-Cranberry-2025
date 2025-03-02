@@ -185,6 +185,8 @@ public class Constants {
     public static final double kIntakeSpeed = 1.0;
     public static final double kEjectSpeed = -0.5;
     public static final double kGroundIntakeSpeed = -0.75;
+
+    public static final double kAlgaeMaxTime = 2.0;
   }
 
   
