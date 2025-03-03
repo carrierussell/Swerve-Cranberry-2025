@@ -114,7 +114,9 @@ public final class Autons {
     //might need to wait and intake the coral after the Algae is removed
             new RunCommand(() -> elevator.goToElevatorL3()).withTimeout(Constants.Elevator.kElevatorMaxMoveTime), 
             new RunCommand(() -> coral.scoreL24()).withTimeout(Constants.Coral.kCoralScoreTime),
-            new RunCommand(() -> coral.stopCoral()).withTimeout(1.0) //add this to stop coral after it scores
+            //new RunCommand(() -> coral.stopCoral()).withTimeout(1.0) //add this to stop coral after it scores
+            Commands.runOnce(() -> coral.stopCoral(), coral), //add this to stop coral after it scores
+            new RunCommand(() -> elevator.goToElevatorStow()).withTimeout(Constants.Elevator.kElevatorMaxMoveTime) // moves elevator back down to stow position after scoring
         );
     }
 
@@ -122,7 +124,8 @@ public final class Autons {
      public static Command scoreCoralL1(Coral coral, Elevator elevator){
         return Commands.sequence(
             new RunCommand(() -> coral.scoreL24()).withTimeout(Constants.Coral.kCoralScoreTime),
-            new RunCommand(() -> coral.stopCoral()).withTimeout(1.0) //add this to stop coral after it scores
+            //new RunCommand(() -> coral.stopCoral()).withTimeout(1.0) //add this to stop coral after it scores
+            Commands.runOnce(() -> coral.stopCoral(), coral) //add this to stop coral after it scores
         );
     }
 
