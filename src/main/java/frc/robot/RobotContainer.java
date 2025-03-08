@@ -122,6 +122,6 @@ public boolean LEDBeamBreak(){
   public Command getAutonomousCommand() {
     // Grab selected auto from SmartDashboard drop down menu
     String selectedAutoName = SmartDashboard.getString("Auto Selector", Autons.autoNames[0]);
-    return Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator);
+    return Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator, m_algae);
   }
 }

@@ -31,7 +31,7 @@ public final class Autons {
     }
     */
     public static Supplier<Boolean> getLEDState;
-    public static String[] autoNames = {"Leave", "Leave Trajectory", "Leave and Score L1" , "Leave and ScoreL2", "Leave and ScoreL3"};;
+    public static String[] autoNames = {"Leave", "Leave Trajectory", "Leave and ScoreL1" , "Leave and ScoreL2", "Leave and ScoreL3"};;
 
     // Initializes a DigitalInput on DIO 0 for the light break sensor
   //  static DigitalInput lightBeamSensor = new DigitalInput (1);
@@ -63,10 +63,10 @@ public final class Autons {
         case "Leave and ScoreL1":
         command = leaveAndScoreL1(robotDrive, coral, elevator);
         break;
-        case "Leave and Score L2":
+        case "Leave and ScoreL2":
         command = leaveAndScoreL2(robotDrive, coral, elevator);
         break;
-        case "Leave and Score L3":
+        case "Leave and ScoreL3":
         command = leaveAndScoreL3(robotDrive, coral, elevator, algae);
         break;
         
@@ -84,12 +84,13 @@ public final class Autons {
     }
 
     //remove Algae from reef
-    public static Command removeAlgae(Algae algae, Elevator elevator){
+    public static Command removeAlgae(DriveSubsystem robotDrive, Elevator elevator, Algae algae){
         //try seeing if we can get the Algae out of the reef during auton...
         return Commands.sequence(
             new RunCommand(() -> elevator.goToAlgaeLow(), elevator).withTimeout(Constants.Elevator.kElevatorMaxMoveTime),
             // OR
             new RunCommand(() -> elevator.goToAlgaeLow(), elevator).until(() -> elevator.hasReached()),
+            moveAlgae(robotDrive),
             new RunCommand(() -> algae.grabAlgae(), algae).withTimeout(Constants.Algae.kAlgaeMaxTime),
             new RunCommand(() -> algae.stopAlgae(), algae).withTimeout(1.0), 
             new RunCommand(() -> elevator.goToElevatorStow(), elevator).withTimeout(Constants.Elevator.kElevatorMaxMoveTime)
@@ -134,6 +135,12 @@ public final class Autons {
         );
     }
 
+    public static Command moveAlgae(DriveSubsystem robotDrive) {
+        return Commands.sequence(
+            startZoneMovement(robotDrive, 0.3 , 0.15)  //test this small move
+        );
+    }
+
     public static Command leaveAndScoreL1(DriveSubsystem robotDrive, Coral coral, Elevator elevator) {
         return Commands.sequence(
             leaveTrajectory(robotDrive), // you could combine the driving in parallel with lifting the elevator, to really maximize time. See next command "leaveAndScoreL3_Parallel".
@@ -157,7 +164,7 @@ public final class Autons {
     public static Command leaveAndScoreL3(DriveSubsystem robotDrive, Coral coral, Elevator elevator, Algae algae) {
         return Commands.sequence(
             algaeTrajectory(robotDrive),
-            removeAlgae(algae, elevator),   
+            removeAlgae(robotDrive, elevator, algae),   
             scoreCoralL3(coral, elevator)
         );
     }
@@ -175,7 +182,7 @@ public final class Autons {
         Trajectory leaveTrajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(1.5, 0, new Rotation2d(0)),            //tested at 1.73 calculated to be 1.4 with back wheel on starting line
+            new Pose2d(1.7, 0, new Rotation2d(0)),            //tested at 1.73 calculated to be 1.4 with back wheel on starting line
             config
         );
     

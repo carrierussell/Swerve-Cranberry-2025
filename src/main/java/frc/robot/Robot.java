@@ -182,7 +182,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     String selectedAutoName = SmartDashboard.getString("Auto Selector", Autons.autoNames[0]);
-    Command autoCommand = Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator);
+    Command autoCommand = Autons.getSelectedAuto(selectedAutoName, m_drive, m_coral, m_elevator, m_algae);
 
     if(autoCommand != null) {
     autoCommand.schedule();
@@ -303,7 +303,7 @@ public class Robot extends LoggedRobot {
     } else if (m_operatorController.getWantsGroundAlgae()) {
       m_algae.groundIntake();
     } else if (m_operatorController.getWantsStopCoral()) {
-      m_coral.intake();
+      m_coral.stopCoral();
     } /*else if(m_operatorController.getMoveAlgaeUp()>0.5){  //add to try manual algae control
       m_algae.getAlgaeUp();
         if(m_operatorController.getMoveAlgaeUp()<0.5){
