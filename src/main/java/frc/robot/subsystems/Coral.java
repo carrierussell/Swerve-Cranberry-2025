@@ -91,7 +91,7 @@ public class Coral extends Subsystem {
   @Override
   public void periodic() {
     mPeriodicIO.measurement = mLaserCAN.getMeasurement();
-   System.out.println("This is the LaserCAN reading: " + mLaserCAN.getMeasurement().distance_mm);
+   //System.out.println("This is the LaserCAN reading: " + mLaserCAN.getMeasurement().distance_mm);
     checkAutoTasks();
   }
 
@@ -167,9 +167,15 @@ public class Coral extends Subsystem {
     mPeriodicIO.state = IntakeState.SCORE;
   }
 
-  public void scoreL24() {
+  public void scoreL23() {
     mPeriodicIO.speed_diff = 0.0;
     mPeriodicIO.rpm = Constants.Coral.kL24Speed;
+    mPeriodicIO.state = IntakeState.SCORE;
+  }
+
+  public void scoreL4() {
+    mPeriodicIO.speed_diff = 0.0;
+    mPeriodicIO.rpm = Constants.Coral.kL4Speed;
     mPeriodicIO.state = IntakeState.SCORE;
   }
 

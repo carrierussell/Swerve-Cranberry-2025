@@ -249,12 +249,14 @@ public class Robot extends LoggedRobot {
 
       if (m_elevator.getState() == Elevator.ElevatorState.STOW) {
         m_coral.scoreL1();
+      } else if (m_elevator.getState() == Elevator.ElevatorState.L4) {
+        m_coral.scoreL4();
       } else {
-        m_coral.scoreL24();
+        m_coral.scoreL23();
       }
     } else if (scorePressed) {
       scorePressed = false;
-      m_elevator.goToElevatorStow();
+      //m_elevator.goToElevatorStow();
       m_coral.intake();
     } else if (m_driverController.getWantsScoreAlgae()) {
       m_algae.score();

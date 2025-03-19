@@ -105,12 +105,12 @@ public class Constants {
     public static final double kMaxVelocity = 65;
     public static final double kMaxAcceleration = 200;
 
-    public static final int kMaxCurrent = 40;
+    public static final int kMaxCurrent = 50;
 
     public static final double kStowHeight = 0.0;
     public static final double kL2Height = 9.5;
     public static final double kL3Height = 25.75;
-    public static final double kL4Height = 54.0;
+    public static final double kL4Height = 56.0;
     public static final double kMaxHeight = 54.0;
     public static final double kGroundAlgaeHeight = 0.0;
     public static final double kScoreAlgaeHeight = 0.0;
@@ -141,6 +141,7 @@ public class Constants {
     public static final double kReverseSpeed = -0.35;
     public static final double kL1Speed = 0.20;
     public static final double kL24Speed = 0.30;
+    public static final double kL4Speed = 0.20;
     public static final double kIndexSpeed = 0.2;
     public static final double kSpeedDifference = kL1Speed * 0.7
     
@@ -180,7 +181,7 @@ public class Constants {
     public static final double kGroundIntakeAngle = 350.0;
 
     // INTAKE
-    public static final int kMaxIntakeCurrent = 23;
+    public static final int kMaxIntakeCurrent = 40;  //this was set for 23, but upping this may help it run better
 
     public static final double kIntakeSpeed = 1.0;
     public static final double kEjectSpeed = -0.5;
